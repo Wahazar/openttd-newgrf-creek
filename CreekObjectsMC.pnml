@@ -1,0 +1,450 @@
+/*
+ *  Copyright (C) 2017 GarryG
+ *  This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+ *  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+ *  You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*/
+
+/*
+* GRF HEADER
+*/
+
+
+//include sprite templates
+
+template template_creek(x,y,filename) {
+    [x, y, 64, 44, -31, -13, ANIM, filename]
+    [x+75, y, 64, 44, -31, -13, ANIM, filename]
+    [x+150, y, 64, 44, -31, -13, ANIM, filename]
+    [x+225, y, 64, 44, -31, -13, ANIM, filename]
+}
+
+//template template_building_low_single(x,y,filename) {
+//    [x+14, y+2, 64, 44, -31, -13, filename]
+//}
+
+ template template_building_slope(x,y,filename) {
+    [x+14, y+2, 64, 44, -31, -8, ANIM, filename]
+    [x+89, y+2, 64, 44, -31, -8, ANIM, filename]
+    [x+164, y+2, 64, 44, -31, -8, ANIM, filename]
+    [x+239, y+2, 64, 44, -31, -8, ANIM, filename]
+}
+
+
+//template template_groundsprite(x,y,filename) {
+//    [x, y, 64, 31, -31, 0, filename]
+//}
+
+#define CHECK_TILES(x,y) ((nearby_tile_class(x, y)==TILE_CLASS_OBJECTS) || (nearby_tile_class(x, y)==TILE_CLASS_WATER))
+
+// define the newgrf
+grf {
+ grfid: "\77\67\20\18";
+ name: string(STR_GRF_NAME);
+ desc: string(STR_GRF_DESCRIPTION);
+    url: string(STR_GRF_URL);
+ version: 2;
+ min_compatible_version: 1;
+
+//grf custom parameters
+    param {
+        param_placement_cost {
+            type:   int;
+            min_value: 0;
+            max_value: 2;
+            def_value: 1;
+            name:   string(STR_PARAM_NAME_PLACEMENT_COST);
+            desc:   string(STR_PARAM_DESC_PLACEMENT_COST);
+            names: {
+                        0: string(STR_PARAM_COST_L);
+                        1: string(STR_PARAM_COST_H);
+                        2: string(STR_PARAM_COST_EDITOR);
+            };
+        }
+    }
+
+    param {
+        param_removal_cost {
+            type:   int;
+            min_value: 0;
+            max_value: 2;
+            def_value: 1;
+            name:   string(STR_PARAM_NAME_REMOVAL_COST);
+            desc:   string(STR_PARAM_DESC_REMOVAL_COST);
+            names: {
+                        0: string(STR_PARAM_COST_L);
+                        1: string(STR_PARAM_COST_H);
+                        2: string(STR_PARAM_COST_EDITOR);
+            };
+        }
+    }
+
+}
+
+//check for OpenTTD and version
+if (ttd_platform != PLATFORM_OPENTTD) {
+    //requires OpenTTD
+    error(FATAL, USED_WITH, "OpenTTD");
+}
+else {
+    //check for OpenTTD version
+    if (openttd_version < version_openttd(1, 2, 0, 23842)) {
+        //requires OpenTTD version
+        error(FATAL, REQUIRES_OPENTTD, "1.2.0 / r23842");
+    }
+}
+
+/*
+* MAIN CONTENT
+*/
+
+
+
+spriteset (spriteset_Creek16) { 
+    template_creek(14,2,"gfx/objects/Creek00.png")
+    template_creek(14,2,"gfx/objects/Creek01.png")
+    template_creek(14,2,"gfx/objects/Creek02.png")
+    template_creek(14,2,"gfx/objects/Creek03.png")
+    template_creek(14,2,"gfx/objects/Creek04.png")
+    template_creek(14,2,"gfx/objects/Creek05.png")
+    template_creek(14,2,"gfx/objects/Creek06.png")
+    template_creek(14,2,"gfx/objects/Creek07.png") 
+    template_creek(14,2,"gfx/objects/Creek08.png")
+    template_creek(14,2,"gfx/objects/Creek09.png")
+    template_creek(14,2,"gfx/objects/Creek10.png")
+    template_creek(14,2,"gfx/objects/Creek11.png")
+    template_creek(14,2,"gfx/objects/Creek12.png")
+    template_creek(14,2,"gfx/objects/Creek13.png")
+    template_creek(14,2,"gfx/objects/Creek14.png")
+    template_creek(14,2,"gfx/objects/Creek15.png")
+} 
+
+spriteset (spriteset_Creek16_Snow) { 
+    template_creek(14,2,"gfx/objects/Creek00_SNOW.png")
+    template_creek(14,2,"gfx/objects/Creek01_SNOW.png")
+    template_creek(14,2,"gfx/objects/Creek02_SNOW.png")
+    template_creek(14,2,"gfx/objects/Creek03_SNOW.png")
+    template_creek(14,2,"gfx/objects/Creek04_SNOW.png")
+    template_creek(14,2,"gfx/objects/Creek05_SNOW.png")
+    template_creek(14,2,"gfx/objects/Creek06_SNOW.png")
+    template_creek(14,2,"gfx/objects/Creek07_SNOW.png") 
+    template_creek(14,2,"gfx/objects/Creek08_SNOW.png")
+    template_creek(14,2,"gfx/objects/Creek09_SNOW.png")
+    template_creek(14,2,"gfx/objects/Creek10_SNOW.png")
+    template_creek(14,2,"gfx/objects/Creek11_SNOW.png")
+    template_creek(14,2,"gfx/objects/Creek12_SNOW.png")
+    template_creek(14,2,"gfx/objects/Creek13_SNOW.png")
+    template_creek(14,2,"gfx/objects/Creek14_SNOW.png")
+    template_creek(14,2,"gfx/objects/Creek15_SNOW.png")
+} 
+
+spriteset (spriteset_CreekMenu) { 
+    template_creek(14,2,"gfx/objects/Creek05.png")
+}
+
+spriteset (spriteset_CreekSlope) { 
+    template_building_slope(0,0,"gfx/objects/CreekSlope.png")
+}
+
+spriteset (spriteset_CreekSlope_Snow) { 
+    template_building_slope(0,0,"gfx/objects/CreekSlope_SNOW.png")
+}
+
+spritelayout spritelayout_Creek16 { 
+    ground { 
+        sprite: LOAD_TEMP(2); 
+    } 
+ 	childsprite {
+        	sprite: spriteset_Creek16(LOAD_TEMP(1));
+ 		always_draw: 1; 
+ 	}
+} 
+
+spritelayout spritelayout_Creek16_SNOW { 
+    ground { 
+        sprite: GROUNDSPRITE_SNOW_4_4; 
+    } 
+ 	childsprite {
+        	sprite: spriteset_Creek16_Snow(LOAD_TEMP(1));
+ 		always_draw: 1; 
+ 	}
+} 
+
+spritelayout spritelayout_CreekSlope1 { 
+    ground { 
+        sprite: LOAD_TEMP(2) + slope_to_sprite_offset(nearby_tile_slope(0, 0)); 
+    } 
+ 	childsprite {
+        sprite: spriteset_CreekSlope(LOAD_TEMP(1));
+ 		always_draw: 1; 
+ 	}
+} 
+
+spritelayout spritelayout_CreekSlope1_Snow { 
+    ground { 
+        sprite: GROUNDSPRITE_SNOW_2_4 + slope_to_sprite_offset(nearby_tile_slope(0, 0)); 
+    } 
+ 	childsprite {
+        sprite: spriteset_CreekSlope_Snow(LOAD_TEMP(1)); 
+ 		always_draw: 1; 
+ 	}
+} 
+
+spritelayout spritelayout_CreekMenu0 { 
+    ground { 
+        sprite: GROUNDSPRITE_NORMAL; 
+    } 
+ 	childsprite {
+         sprite: spriteset_CreekMenu(0); 
+ 		always_draw: 1; 
+ 	}
+} 
+
+spritelayout spritelayout_CreekMenu1 { 
+    ground { 
+        sprite: GROUNDSPRITE_NORMAL; 
+    } 
+ 	childsprite {
+         sprite: spriteset_CreekMenu(1); 
+ 		always_draw: 1; 
+ 	}
+} 
+
+spritelayout spritelayout_CreekMenu2 { 
+    ground { 
+        sprite: GROUNDSPRITE_NORMAL; 
+    } 
+ 	childsprite {
+         sprite: spriteset_CreekMenu(2); 
+ 		always_draw: 1; 
+ 	}
+} 
+
+spritelayout spritelayout_CreekMenu3 { 
+    ground { 
+        sprite: GROUNDSPRITE_NORMAL; 
+    } 
+ 	childsprite {
+         sprite: spriteset_CreekMenu(3); 
+ 		always_draw: 1; 
+ 	}
+} 
+
+switch (FEAT_OBJECTS, SELF, switch_Creek_slope_snow, terrain_type == TILETYPE_SNOW) { 
+   1 : return spritelayout_CreekSlope1_Snow;
+   return spritelayout_CreekSlope1; 
+}
+
+switch (FEAT_OBJECTS, SELF, switch_Creek_flat_snow, terrain_type == TILETYPE_SNOW) { 
+   1 : return spritelayout_Creek16_SNOW;
+   return spritelayout_Creek16; 
+}
+
+switch (FEAT_OBJECTS, SELF, switch_Creek_slope, [ 
+        STORE_TEMP((tile_slope==SLOPE_SE) + 2 * (tile_slope==SLOPE_SW)  + 3 * (tile_slope==SLOPE_NW), 1) 
+        ]) { 
+   switch_Creek_slope_snow; 
+}
+
+#define CREEK_TERRAIN_SWITCH(n) \
+switch (FEAT_OBJECTS, SELF, switch_Creek_##n##_flat, [  \
+        STORE_TEMP(4 * (1 * (CHECK_TILES(0, -1)) + 2 * (CHECK_TILES(1, 0)) + 4 * (CHECK_TILES(0, 1)) + 8 * (CHECK_TILES(-1, 0))) + n, 1)  \
+        ]) {  \
+   switch_Creek_flat_snow;  \
+} \
+\
+switch (FEAT_OBJECTS, SELF, switch_Creek_##n##_check_slopes, tile_slope) { \
+   SLOPE_FLAT : return switch_Creek_##n##_flat; \
+   return switch_Creek_slope; \
+} \
+\
+switch (FEAT_OBJECTS, SELF, creek_##n##_terrain_switch, [ \
+ 			STORE_TEMP(GROUNDSPRITE_NORMAL, 2),   \
+ 			STORE_TEMP(terrain_type == TILETYPE_DESERT      ? GROUNDSPRITE_DESERT :  \
+			LOAD_TEMP(2), 2),   \
+ 			STORE_TEMP(terrain_type == TILETYPE_SNOW        ? GROUNDSPRITE_SNOW_2_4   : 				LOAD_TEMP(2),  2), 2  ]) {  \
+ 	switch_Creek_##n##_check_slopes;  \
+}
+
+CREEK_TERRAIN_SWITCH(0)
+CREEK_TERRAIN_SWITCH(1)
+CREEK_TERRAIN_SWITCH(2)
+CREEK_TERRAIN_SWITCH(3)
+
+
+switch (FEAT_OBJECTS, SELF, switch_Creek_placement, (extra_callback_info1 & 0x1F)) {
+   SLOPE_FLAT : return CB_RESULT_LOCATION_ALLOW;
+   SLOPE_NW : return CB_RESULT_LOCATION_ALLOW;
+   SLOPE_SW : return CB_RESULT_LOCATION_ALLOW;
+   SLOPE_NE : return CB_RESULT_LOCATION_ALLOW;
+   SLOPE_SE : return CB_RESULT_LOCATION_ALLOW;
+   return  CB_RESULT_LOCATION_DISALLOW;
+}
+
+item (FEAT_OBJECTS, Creek0, 120) {
+    property {
+        class:                  "NATR";
+        classname:              string(STR_NATR);
+        name:                   string(STR_Creek0);
+        climates_available:     ALL_CLIMATES;
+        size:                   [1,1];
+        build_cost_multiplier:  30;
+        remove_cost_multiplier: 1;
+        introduction_date:      date(1,1,1);
+        end_of_life_date:       0xFFFFFFFF;
+        height:                 0;
+        num_views:              1; 
+	object_flags:           bitmask(OBJ_FLAG_ALLOW_BRIDGE);
+    }
+    graphics {
+        default:            creek_0_terrain_switch;
+        purchase:           spritelayout_CreekMenu0;
+	tile_check:	    switch_Creek_placement;
+        autoslope:          return CB_RESULT_NO_AUTOSLOPE; //disallow autosloping
+    }
+}
+
+item (FEAT_OBJECTS, Creek1, 121) {
+    property {
+        class:                  "NATR";
+        classname:              string(STR_NATR);
+        name:                   string(STR_Creek1);
+        climates_available:     ALL_CLIMATES;
+        size:                   [1,1];
+        build_cost_multiplier:  30;
+        remove_cost_multiplier: 1;
+        introduction_date:      date(1,1,1);
+        end_of_life_date:       0xFFFFFFFF;
+        height:                 0;
+        num_views:              1; 
+	object_flags:           bitmask(OBJ_FLAG_ALLOW_BRIDGE, OBJ_FLAG_NO_FOUNDATIONS);
+    }
+    graphics {
+        default:            creek_1_terrain_switch;
+        purchase:           spritelayout_CreekMenu1;
+	tile_check:	    switch_Creek_placement;
+        autoslope:          return CB_RESULT_NO_AUTOSLOPE; //disallow autosloping
+    }
+}
+
+item (FEAT_OBJECTS, Creek2, 122) {
+    property {
+        class:                  "NATR";
+        classname:              string(STR_NATR);
+        name:                   string(STR_Creek2);
+        climates_available:     ALL_CLIMATES;
+        size:                   [1,1];
+        build_cost_multiplier:  30;
+        remove_cost_multiplier: 1;
+        introduction_date:      date(1,1,1);
+        end_of_life_date:       0xFFFFFFFF;
+        height:                 0;
+        num_views:              1; 
+	object_flags:           bitmask(OBJ_FLAG_ALLOW_BRIDGE, OBJ_FLAG_NO_FOUNDATIONS);
+    }
+    graphics {
+        default:            creek_2_terrain_switch;
+        purchase:           spritelayout_CreekMenu2;
+	tile_check:	    switch_Creek_placement;
+        autoslope:          return CB_RESULT_NO_AUTOSLOPE; //disallow autosloping
+    }
+}
+
+item (FEAT_OBJECTS, Creek3, 123) {
+    property {
+        class:                  "NATR";
+        classname:              string(STR_NATR);
+        name:                   string(STR_Creek3);
+        climates_available:     ALL_CLIMATES;
+        size:                   [1,1];
+        build_cost_multiplier:  30;
+        remove_cost_multiplier: 1;
+        introduction_date:      date(1,1,1);
+        end_of_life_date:       0xFFFFFFFF;
+        height:                 0;
+        num_views:              1; 
+	object_flags:           bitmask(OBJ_FLAG_ALLOW_BRIDGE, OBJ_FLAG_NO_FOUNDATIONS);
+    }
+    graphics {
+        default:            creek_3_terrain_switch;
+        purchase:           spritelayout_CreekMenu3;
+	tile_check:	    switch_Creek_placement;
+        autoslope:          return CB_RESULT_NO_AUTOSLOPE; //disallow autosloping
+    }
+}
+
+
+//placement restrictions
+#define PLACEMENT_RESTRICTIONS(n)  \
+if ((param_placement_cost==2) &&  (param_removal_cost!=2)) {  \
+	item (FEAT_OBJECTS, Creek##n) { \
+    		property { \
+        		object_flags:           bitmask(OBJ_FLAG_ALLOW_BRIDGE, OBJ_FLAG_ONLY_SE, OBJ_FLAG_NO_FOUNDATIONS); \
+    		} \
+	} \
+} else if (param_removal_cost!=2) { \
+	item (FEAT_OBJECTS, Creek##n) { \
+    		property { \
+        		object_flags:           bitmask(OBJ_FLAG_ALLOW_BRIDGE, OBJ_FLAG_NO_FOUNDATIONS); \
+    		} \
+	} \
+}
+
+//removal restrictions imply placement restrictions
+#define REMOVAL_RESTRICTIONS(n)  \
+if (param_removal_cost==2) { \
+	item (FEAT_OBJECTS, Creek##n) { \
+    		property { \
+        		object_flags:           bitmask(OBJ_FLAG_ALLOW_BRIDGE, OBJ_FLAG_ONLY_SE, OBJ_FLAG_IRREMOVABLE, OBJ_FLAG_NO_FOUNDATIONS); \
+    		} \
+	} \
+}
+
+#define CREEK_COSTS(n)  \
+if (param_removal_cost==0) { \
+	item (FEAT_OBJECTS, Creek##n) { \
+    		property { \
+        		remove_cost_multiplier: 1; \
+    		} \
+	} \
+} else { \
+	item (FEAT_OBJECTS, Creek##n) { \
+    		property { \
+        		remove_cost_multiplier: 255; \
+    		} \
+	} \
+} \
+if (param_placement_cost==0) { \
+	item (FEAT_OBJECTS, Creek##n) { \
+    		property { \
+        		build_cost_multiplier:  30; \
+    		} \
+	} \
+} else { \
+	item (FEAT_OBJECTS, Creek##n) { \
+    		property { \
+        		build_cost_multiplier:  255; \
+    		} \
+	} \
+}
+
+
+PLACEMENT_RESTRICTIONS(0)
+PLACEMENT_RESTRICTIONS(1)
+PLACEMENT_RESTRICTIONS(2)
+PLACEMENT_RESTRICTIONS(3)
+REMOVAL_RESTRICTIONS(0)
+REMOVAL_RESTRICTIONS(1)
+REMOVAL_RESTRICTIONS(2)
+REMOVAL_RESTRICTIONS(3)
+
+CREEK_COSTS(0)
+CREEK_COSTS(1)
+CREEK_COSTS(2)
+CREEK_COSTS(3)
+
+basecost {
+	PR_CLEAR_UNMOVABLE:    4;
+
+}
+

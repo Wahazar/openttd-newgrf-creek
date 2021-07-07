@@ -1,0 +1,29 @@
+##grflangid 0x01
+##plural 0
+# This is the English language file
+
+STR_CREK : Creek
+STR_NATR : Nature objects
+STR_Creek0 : Straigth Creek
+STR_Creek1 : Winding Creek 1
+STR_Creek2 : Winding Creek 2
+STR_Creek3 : Winding Creek 3
+STR_PARAM_NAME_PLACEMENT_COST : Object placement cost
+STR_PARAM_DESC_PLACEMENT_COST : Object placement cost, if third option is chosen, object placement is available only in the scenario editor
+STR_PARAM_NAME_REMOVAL_COST : Object removal cost
+STR_PARAM_DESC_REMOVAL_COST : Cost of object demolishion, if third option is shoosen, objects can be removed only in scenario editor or by magic bulldozer cheat.
+STR_PARAM_COST_L	: Low
+STR_PARAM_COST_H	: High
+STR_PARAM_COST_EDITOR	: In scenario editor only
+
+#Main grf title and description
+STR_GRF_NAME            :Creeks (fake rivers)
+STR_GRF_DESCRIPTION     :{ORANGE}Version 2: fake rivers as objects {BLACK} (fork of AuZWaterObjects) {}Project of: GarryG, McZapkie {}License:GPLv3 or higher. {}See readme for details.
+STR_GRF_URL             :https://www.tt-forums.net/viewtopic.php?f=26&t=75657
+
+#error messages
+STR_ERROR_TILE_LEVEL            :Must be built level.
+STR_ERROR_TILE_SPACE            :Must be built one tile apart.
+STR_ERROR_TILE_SLOPE_SHOULDER   :Adjacent road tile cannot have foundations on side of shoulder.
+
+
